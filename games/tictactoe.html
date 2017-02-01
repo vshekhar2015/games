@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<meta name="viewport" 
+  content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+<html lang="en-us">
+  <head>
+    <style>
+    .tile {
+       float: left;
+       margin: 1px;
+       padding: 0px;
+       height: 28vh;
+       width: 30vw;
+       border: 1px solid black;
+       text-align: center;
+       font-size: 7vh;
+       font-family: Verdana, Geneva, sans-serif;
+    }
+    .backgroundRed{
+        background: red;
+    }
+    .action {
+      text-align: center;
+    }
+    .hidden{
+      display: none;
+    }
+    .left{
+      float: left;
+    }
+    .right{
+      float: right;
+    }
+    .message{
+      margin: 2px;
+      padding: 2px;
+      padding-top: 2px;
+      font-family: Verdana, Geneva, sans-serif;
+      font-size: 3vh;
+    }
+    button{
+        padding-top: 2px;
+        font-family: Verdana, Geneva, sans-serif;
+        font-size: 3vh;
+    }
+    </style>
+    <script type="text/javascript">
+
+      var playerOneTurn = true;
+      var clickCounter = 0;
+      var turnPlayed = function(elem) {
+        if (clickCounter == 9) {
+          document.getElementById('gameover').className = 'hidden';
+          restartGame();
+          return;
+        }
+
+        if (!elem.played) {
+          elem.played = true;
+          if (playerOneTurn) {
+            elem.innerHTML = '<h2>X</h2>';
+          } else {
+            elem.innerHTML = '<h2>O</h2>';
+          }
+          playerOneTurn = !playerOneTurn;
+          clickCounter++;
+          if (clickCounter == 9) {
+            document.getElementById('gameover').className = 'message';
+            return;
+          }
+        } else {
+          elem.className = "tile backgroundRed";
+          setTimeout(function() {
+            elem.className = "tile";
+          }, 200);
+        }
+      };
+      var restartGame = function() {
+        var divs = document.getElementsByTagName("div");
+        document.getElementById('gameover').className = 'hidden';
+        var i;
+        for (i = 0; i < divs.length; i++) {
+          if (divs[i].className == 'tile') {
+            divs[i].innerHTML = '';
+            divs[i].played = false;
+          }
+        }
+        clickCounter = 0;
+      };
+
+      document.body.addEventListener('touchmove', function(event) {
+        event.preventDefault();
+      }, false);
+    </script>
+  </head>
+  <body>
+    <div class='action'>
+      <span class='message left'>Tic Tac Toe</span>
+      <button id='restartbutton' class='right' onclick='restartGame()'>New</button>
+      <span id='gameover' class='message hidden'>Game Over!</span>
+      <div style='clear: both'></div>
+    </div>
+
+    <div onclick='turnPlayed(this)' class='tile' ></div>
+    <div onclick='turnPlayed(this)' class='tile' ></div>
+    <div onclick='turnPlayed(this)' class='tile' ></div>
+    <div onclick='turnPlayed(this)' class='tile' ></div>
+    <div onclick='turnPlayed(this)' class='tile' ></div>
+    <div onclick='turnPlayed(this)' class='tile' ></div>
+    <div onclick='turnPlayed(this)' class='tile' ></div>
+    <div onclick='turnPlayed(this)' class='tile' ></div>
+    <div onclick='turnPlayed(this)' class='tile' ></div>
+    <div style='clear: both'></div>
+  </body>
+</html>
